@@ -1,0 +1,586 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    background: #fff4f7;
+
+    color: #563944;
+
+    font-family: Arial, sans-serif;
+
+    min-height: 100vh;
+
+}
+
+
+/* CABEÇALHO */
+
+header {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.logo {
+
+    font-size: 28px;
+
+    font-family: Georgia, serif;
+
+    font-weight: bold;
+
+    color: #a85578;
+
+}
+
+
+.logo span {
+
+    display: block;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+    color: #dc91ac;
+
+}
+
+
+/* MENU */
+
+nav {
+
+    display: flex;
+
+    gap: 25px;
+
+}
+
+
+nav a {
+
+    text-decoration: none;
+
+    color: #563944;
+
+    font-size: 14px;
+
+    opacity: 0.6;
+
+}
+
+
+nav a:hover,
+nav a.active {
+
+    opacity: 1;
+
+    color: #a85578;
+
+}
+
+
+/* CONTEÚDO */
+
+main {
+
+    max-width: 950px;
+
+    margin: auto;
+
+    padding: 40px 30px 80px;
+
+}
+
+
+/* PARTE INICIAL */
+
+.hero {
+
+    padding: 70px 0;
+
+}
+
+
+.small-title {
+
+    color: #dc91ac;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 20px;
+
+}
+
+
+h1 {
+
+    font-family: Georgia, serif;
+
+    font-size: 65px;
+
+    line-height: 1.1;
+
+}
+
+
+h1 span {
+
+    color: #dc91ac;
+
+    font-style: italic;
+
+}
+
+
+.description {
+
+    margin-top: 25px;
+
+    max-width: 600px;
+
+    line-height: 1.7;
+
+    color: #8b6a75;
+
+}
+
+
+/* BLOCO DE NOTAS */
+
+.note-section {
+
+    margin-top: 30px;
+
+}
+
+
+.note-title {
+
+    margin-bottom: 20px;
+
+}
+
+
+.note-title p {
+
+    color: #dc91ac;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.note-title h2 {
+
+    font-family: Georgia, serif;
+
+    font-size: 32px;
+
+}
+
+
+.note {
+
+    background: white;
+
+    border: 1px solid #f0cbd8;
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    box-shadow: 0 10px 35px rgba(150, 70, 100, 0.08);
+
+}
+
+
+.note input {
+
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-family: Georgia, serif;
+
+    font-size: 25px;
+
+    color: #563944;
+
+}
+
+
+.note input::placeholder {
+
+    color: #d8a4b5;
+
+}
+
+
+.note hr {
+
+    border: none;
+
+    border-top: 1px solid #f0cbd8;
+
+    margin: 20px 0;
+
+}
+
+
+textarea {
+
+    width: 100%;
+
+    height: 250px;
+
+    border: none;
+
+    outline: none;
+
+    resize: none;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+
+    color: #563944;
+
+}
+
+
+textarea::placeholder {
+
+    color: #d8a4b5;
+
+}
+
+
+.note-footer {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+#counter {
+
+    font-size: 12px;
+
+    color: #b79aa4;
+
+}
+
+
+button {
+
+    background: #a85578;
+
+    color: white;
+
+    border: none;
+
+    padding: 14px 22px;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+}
+
+
+button:hover {
+
+    background: #dc91ac;
+
+}
+
+
+/* MENSAGENS */
+
+.messages-header {
+
+    text-align: center;
+
+    padding: 60px 0;
+
+}
+
+
+.messages-header > p:first-child {
+
+    color: #dc91ac;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+}
+
+
+.messages-container {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+
+    gap: 20px;
+
+}
+
+
+/* CARTÃO */
+
+.message-card {
+
+    background: white;
+
+    border: 1px solid #f0cbd8;
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    position: relative;
+
+}
+
+
+.message-card h2 {
+
+    font-family: Georgia, serif;
+
+    color: #a85578;
+
+    margin-bottom: 15px;
+
+}
+
+
+.message-card p {
+
+    line-height: 1.7;
+
+    color: #72545f;
+
+    white-space: pre-wrap;
+
+}
+
+
+.message-date {
+
+    display: block;
+
+    margin-top: 25px;
+
+    font-size: 11px;
+
+    color: #b79aa4;
+
+}
+
+
+.delete-button {
+
+    position: absolute;
+
+    top: 10px;
+
+    right: 10px;
+
+    background: transparent;
+
+    color: #d889a5;
+
+    font-size: 20px;
+
+    padding: 5px 10px;
+
+}
+
+
+.delete-button:hover {
+
+    background: transparent;
+
+    color: #9c3e62;
+
+}
+
+
+/* SEM MENSAGENS */
+
+.empty-state {
+
+    display: none;
+
+    text-align: center;
+
+    padding: 60px;
+
+}
+
+
+.empty-state .heart {
+
+    font-size: 100px;
+
+    color: #f2c6d5;
+
+}
+
+
+.empty-state h2 {
+
+    font-family: Georgia, serif;
+
+}
+
+
+.empty-state p {
+
+    margin: 15px;
+
+    color: #8b6a75;
+
+}
+
+
+.empty-state a {
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    background: #a85578;
+
+    color: white;
+
+    padding: 14px 22px;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+}
+
+
+/* NOTIFICAÇÃO */
+
+#toast {
+
+    position: fixed;
+
+    right: 30px;
+
+    bottom: 30px;
+
+    background: #a85578;
+
+    color: white;
+
+    padding: 15px 20px;
+
+    border-radius: 30px;
+
+    opacity: 0;
+
+    transition: 0.3s;
+
+}
+
+
+#toast.show {
+
+    opacity: 1;
+
+}
+
+
+/* CELULAR */
+
+@media (max-width: 600px) {
+
+    header {
+
+        padding: 20px;
+
+    }
+
+
+    main {
+
+        padding: 20px;
+
+    }
+
+
+    h1 {
+
+        font-size: 45px;
+
+    }
+
+
+    .note {
+
+        padding: 25px;
+
+    }
+
+
+    .note-footer {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 15px;
+
+    }
+
+
+    button {
+
+        width: 100%;
+
+    }
+
+}
