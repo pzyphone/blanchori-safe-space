@@ -5,30 +5,49 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Blanchori Safe Space</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
 
 <body>
 
+    <!-- ======================================
+         CABEÇALHO
+    ======================================= -->
+
     <header>
 
         <div class="logo">
+
             blanchori
-            <span>safe space ♡</span>
+
+            <span>
+                safe space ♡
+            </span>
+
         </div>
 
 
         <nav>
 
-            <a href="blanchori.html" class="active">
+            <a
+                href="index.html"
+                class="active"
+            >
                 escrever
             </a>
+
 
             <a href="mensagens.html">
                 mensagens
@@ -39,45 +58,75 @@
     </header>
 
 
+
     <main>
 
+        <!-- ==================================
+             APRESENTAÇÃO
+        =================================== -->
 
-        <section class="hero">
-
-            <p class="small-title">
-                ✦ NOSSO PEQUENO UNIVERSO
-            </p>
-
-
-            <h1>
-
-                escreva tudo o que
-                <span>você quiser.</span>
-
-            </h1>
+        <section class="hero hero-with-photo">
 
 
-            <p class="description">
+            <div class="hero-content">
 
-                Um espaço seguro para deixar pensamentos,
-                mensagens, memórias e pequenas coisas
-                para a outra pessoa encontrar.
+                <p class="small-title">
 
-            </p>
+                    ✦ NOSSO PEQUENO UNIVERSO
+
+                </p>
+
+
+                <h1>
+
+                    escreva tudo o que
+                    <span>você quiser.</span>
+
+                </h1>
+
+
+                <p class="description">
+
+                    Um espaço seguro para deixar pensamentos,
+                    mensagens, memórias e pequenas coisas
+                    para a outra pessoa encontrar.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- FOTO -->
+
+            <img
+                src="foto.jpg"
+                alt="Fotografia decorativa do Blanchori"
+                class="foto-coracao"
+            >
 
         </section>
 
 
+
+        <!-- ==================================
+             NOVA MENSAGEM
+        =================================== -->
 
         <section class="note-section">
 
 
             <div class="note-title">
 
-                <p>✦ NOVA MENSAGEM</p>
+                <p>
+                    ✦ NOVA MENSAGEM
+                </p>
+
 
                 <h2>
+
                     escreva aqui seu recado ♡
+
                 </h2>
 
             </div>
@@ -86,6 +135,8 @@
 
             <div class="note">
 
+
+                <!-- TÍTULO -->
 
                 <input
                     type="text"
@@ -97,26 +148,37 @@
                 <hr>
 
 
+                <!-- MENSAGEM -->
+
                 <textarea
                     id="message"
                     placeholder="o que você está pensando?"
-                    maxlength="1000"
+                    maxlength="30000"
                 ></textarea>
 
 
 
+                <!-- RODAPÉ -->
+
                 <div class="note-footer">
 
+
                     <span id="counter">
-                        0 / 1000
+
+                        0 / 30000
+
                     </span>
 
 
-                    <button onclick="saveMessage()">
+                    <button
+                        type="button"
+                        onclick="saveMessage()"
+                    >
 
                         guardar mensagem ♡
 
                     </button>
+
 
                 </div>
 
@@ -131,6 +193,10 @@
 
 
 
+    <!-- ======================================
+         NOTIFICAÇÃO
+    ======================================= -->
+
     <div id="toast">
 
         mensagem guardada ♡
@@ -138,9 +204,23 @@
     </div>
 
 
+
+    <!-- ======================================
+         SUPABASE
+    ======================================= -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+
+    <!-- ======================================
+         JAVASCRIPT DO BLANCHORI
+    ======================================= -->
+
     <script src="script.js"></script>
+
 
 </body>
 
 </html>
-
