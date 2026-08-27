@@ -1,3 +1,24 @@
+// ==========================================
+// CONEXÃO COM O SUPABASE
+// ==========================================
+
+const SUPABASE_URL =
+    "https://dekrbhtemjmhyyxkgeqk.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_X22VRKI0BTBAjtdJogmTHw_sZ-MJUhi";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+// ==========================================
+// ELEMENTOS
+// ==========================================
+
 const messageInput =
     document.getElementById("message");
 
@@ -5,7 +26,9 @@ const counter =
     document.getElementById("counter");
 
 
+// ==========================================
 // CONTADOR DE CARACTERES
+// ==========================================
 
 if (messageInput && counter) {
 
@@ -16,34 +39,32 @@ if (messageInput && counter) {
 
             counter.textContent =
                 messageInput.value.length
-                + " / 1000";
+                + " / 30000";
 
         }
-
     );
 
 }
 
 
+// ==========================================
 // SALVAR MENSAGEM
+// ==========================================
 
-function saveMessage() {
+async function saveMessage() {
+
+    const titleInput =
+        document.getElementById("title");
+
+    const messageInput =
+        document.getElementById("message");
 
     const title =
-        document
-            .getElementById("title")
-            .value
-            .trim();
-
+        titleInput.value.trim();
 
     const message =
-        document
-            .getElementById("message")
-            .value
-            .trim();
+        messageInput.value.trim();
 
-
-    // NÃO PERMITIR MENSAGEM VAZIA
 
     if (message === "") {
 
@@ -56,95 +77,111 @@ function saveMessage() {
     }
 
 
-    // CRIAR A NOVA MENSAGEM
+    if (message.length > 30000) {
 
-    const newMessage = {
+        alert(
+            "A mensagem pode ter no máximo 30.000 caracteres ♡"
+        );
 
-        id: Date.now(),
+        return;
 
-        title:
-            title === ""
-                ? "sem título ♡"
-                : title,
-
-        text: message,
-
-        date:
-            new Date().toLocaleString("pt-BR")
-
-    };
+    }
 
 
-    // PEGAR AS MENSAGENS JÁ SALVAS
-
-    let messages =
-        JSON.parse(
-
-            localStorage.getItem(
-                "blanchoriMessages"
-            )
-
-        ) || [];
+    console.log("Tentando salvar mensagem...");
 
 
-    // ADICIONAR A NOVA MENSAGEM
+    const { data, error } =
+        await supabaseClient
+            .from("messages")
+            .insert({
 
-    messages.unshift(newMessage);
+                title:
+                    title === ""
+                        ? "sem título ♡"
+                        : title,
+
+                text: message
+
+            })
+            .select();
 
 
-    // SALVAR
+    if (error) {
 
-    localStorage.setItem(
+        console.error(
+            "ERRO DO SUPABASE:",
+            error
+        );
 
-        "blanchoriMessages",
+        alert(
+            "Erro ao guardar mensagem:\n\n"
+            + error.message
+        );
 
-        JSON.stringify(messages)
+        return;
 
+    }
+
+
+    console.log(
+        "Mensagem salva:",
+        data
     );
 
 
-    // LIMPAR OS CAMPOS
+    // ======================================
+    // LIMPAR CAMPOS
+    // ======================================
 
-    document
-        .getElementById("title")
-        .value = "";
+    titleInput.value = "";
 
-
-    document
-        .getElementById("message")
-        .value = "";
+    messageInput.value = "";
 
 
-    counter.textContent = "0 / 1000";
+    if (counter) {
+
+        counter.textContent =
+            "0 / 30000";
+
+    }
 
 
-    // MOSTRAR NOTIFICAÇÃO
+    // ======================================
+    // NOTIFICAÇÃO
+    // ======================================
 
     const toast =
         document.getElementById("toast");
 
 
-    toast.classList.add("show");
+    if (toast) {
+
+        toast.classList.add("show");
 
 
-    setTimeout(
+        setTimeout(
 
-        function () {
+            function () {
 
-            toast.classList.remove("show");
+                toast.classList.remove("show");
 
-        },
+            },
 
-        2500
+            2500
 
-    );
+        );
+
+    }
 
 }
 
 
+// ==========================================
 // MOSTRAR MENSAGENS
+// ==========================================
 
-function loadMessages() {
+async function loadMessages() {
 
     const container =
         document.getElementById(
@@ -158,8 +195,6 @@ function loadMessages() {
         );
 
 
-    // SE NÃO ESTIVER NA PÁGINA DE MENSAGENS
-
     if (!container) {
 
         return;
@@ -167,28 +202,48 @@ function loadMessages() {
     }
 
 
-    const messages =
-        JSON.parse(
+    const { data: messages, error } =
+        await supabaseClient
+            .from("messages")
+            .select("*")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
 
-            localStorage.getItem(
-                "blanchoriMessages"
-            )
 
-        ) || [];
+    if (error) {
 
+        console.error(
+            "ERRO AO CARREGAR:",
+            error
+        );
 
-    // SE NÃO EXISTIR NENHUMA MENSAGEM
-
-    if (messages.length === 0) {
-
-        emptyState.style.display = "block";
+        alert(
+            "Não foi possível carregar as mensagens:\n\n"
+            + error.message
+        );
 
         return;
 
     }
 
 
-    // CRIAR OS CARTÕES
+    if (!messages || messages.length === 0) {
+
+        if (emptyState) {
+
+            emptyState.style.display =
+                "block";
+
+        }
+
+        return;
+
+    }
+
 
     messages.forEach(
 
@@ -228,9 +283,17 @@ function loadMessages() {
             );
 
 
+            const formattedDate =
+                new Date(
+                    message.created_at
+                ).toLocaleString(
+                    "pt-BR"
+                );
+
+
             date.textContent =
                 "guardado em "
-                + message.date;
+                + formattedDate;
 
 
             const deleteButton =
@@ -242,7 +305,8 @@ function loadMessages() {
             );
 
 
-            deleteButton.textContent = "×";
+            deleteButton.textContent =
+                "×";
 
 
             deleteButton.onclick =
@@ -255,16 +319,26 @@ function loadMessages() {
                 };
 
 
-            card.appendChild(deleteButton);
+            card.appendChild(
+                deleteButton
+            );
 
-            card.appendChild(title);
+            card.appendChild(
+                title
+            );
 
-            card.appendChild(text);
+            card.appendChild(
+                text
+            );
 
-            card.appendChild(date);
+            card.appendChild(
+                date
+            );
 
 
-            container.appendChild(card);
+            container.appendChild(
+                card
+            );
 
         }
 
@@ -273,39 +347,37 @@ function loadMessages() {
 }
 
 
+// ==========================================
 // APAGAR MENSAGEM
+// ==========================================
 
-function deleteMessage(id) {
+async function deleteMessage(id) {
 
-    let messages =
-        JSON.parse(
+    const { error } =
+        await supabaseClient
+            .from("messages")
+            .delete()
+            .eq(
+                "id",
+                id
+            );
 
-            localStorage.getItem(
-                "blanchoriMessages"
-            )
 
-        ) || [];
+    if (error) {
 
-
-    messages =
-        messages.filter(
-
-            function (message) {
-
-                return message.id !== id;
-
-            }
-
+        console.error(
+            "ERRO AO APAGAR:",
+            error
         );
 
+        alert(
+            "Não foi possível apagar a mensagem:\n\n"
+            + error.message
+        );
 
-    localStorage.setItem(
+        return;
 
-        "blanchoriMessages",
-
-        JSON.stringify(messages)
-
-    );
+    }
 
 
     location.reload();
@@ -313,6 +385,8 @@ function deleteMessage(id) {
 }
 
 
+// ==========================================
 // EXECUTAR
+// ==========================================
 
 loadMessages();
